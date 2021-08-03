@@ -57,7 +57,7 @@ class Predictor:
 
     def _get_random_ids(self):
         ids = list(range(1, self.training_data_size + self.testing_data_size + 1))
-        #random.shuffle(ids)
+        random.shuffle(ids)
         return ids
 
     def _load_ids_from_file(self):
@@ -131,13 +131,6 @@ class AutonomousPredictor(Predictor):
             plt.xlabel('# epochs')
             plt.legend(loc="upper left")
 
-            #plt.figure(2)
-            #plt.plot(history.history['accuracy'], label='training')
-            #plt.plot(history.history['val_accuracy'], label='testing')
-            #plt.title('Model Accuracy')
-            #plt.ylabel('Accuracy')
-            #plt.xlabel('# epochs')
-            #plt.legend(loc="upper left")
             plt.show()
 
         return model
@@ -234,13 +227,6 @@ class HumanPredictor(Predictor):
             plt.xlabel('# epochs')
             plt.legend(loc="upper left")
 
-            #plt.figure(2)
-            #plt.plot(history.history['accuracy'], label='training')
-            #plt.plot(history.history['val_accuracy'], label='testing')
-            #plt.title('Model Accuracy')
-            #plt.ylabel('Accuracy')
-            #plt.xlabel('# epochs')
-            #plt.legend(loc="upper left")
             plt.show()
 
         return model
@@ -344,75 +330,18 @@ class HumanPredictor(Predictor):
         return xs, ys
 
 def get_human_predictor():
-    return HumanPredictor(training_data_size=1500, testing_data_size=20, load_ids_from_file=False, save_ids_to_file=False)
+    return HumanPredictor(training_data_size=1500, testing_data_size=500, load_ids_from_file=False, save_ids_to_file=False)
 
 def get_autonomous_predictor():
     return AutonomousPredictor(training_data_size=4000, testing_data_size=500, load_ids_from_file=False, save_ids_to_file=True)
 
-def testing():
-    from collections import namedtuple
-    Input = namedtuple('Input', 'num_objs dist_to_goal_1 blocking_obst_1 high_force_1 dist_to_goal_2 blocking_obst_2 high_force_2 dist_to_goal_3 blocking_obst_3 high_force_3')
-    Output = namedtuple('Output', 'dist_to_goal blocking_obst high_force')
-    Test = namedtuple('Test', 'input expected_output')
-
-    MODEL = predictor.get_model()
-    TRAINING_DATA, _ = predictor.get_training_data()
-
-    tests = [
-        Test(input=Input(num_objs=15, dist_to_goal_1=340.99300000000005, blocking_obst_1=0.0, high_force_1=501.352, dist_to_goal_2=391.89300000000003, blocking_obst_2=450.04699999999997, high_force_2=207.06599999999997, dist_to_goal_3=429.358, blocking_obst_3=450.031, high_force_3=111.34299999999999,), expected_output=Output(dist_to_goal=559.286, blocking_obst=0.0, high_force=75.5641)),
-        Test(input=Input(num_objs=10, dist_to_goal_1=336.86400000000003, blocking_obst_1=0.0, high_force_1=0.0, dist_to_goal_2=336.86400000000003, blocking_obst_2=0.0, high_force_2=0.0, dist_to_goal_3=336.86400000000003, blocking_obst_3=0.0, high_force_3=0.0,), expected_output=Output(dist_to_goal=297.372, blocking_obst=0.0, high_force=40.3034)),
-        Test(input=Input(num_objs=20, dist_to_goal_1=275.17, blocking_obst_1=0.0, high_force_1=0.0, dist_to_goal_2=275.17, blocking_obst_2=0.0, high_force_2=0.0, dist_to_goal_3=275.17, blocking_obst_3=0.0, high_force_3=0.0,), expected_output=Output(dist_to_goal=0.0528323, blocking_obst=0.0, high_force=0.0)),
-        Test(input=Input(num_objs=10, dist_to_goal_1=296.39599999999996, blocking_obst_1=0.0, high_force_1=0.0, dist_to_goal_2=315.948, blocking_obst_2=450.055, high_force_2=0.0, dist_to_goal_3=327.113, blocking_obst_3=0.0, high_force_3=0.0,), expected_output=Output(dist_to_goal=297.318, blocking_obst=0.0, high_force=0.0)),
-        Test(input=Input(num_objs=20, dist_to_goal_1=480.36800000000005, blocking_obst_1=450.066, high_force_1=0.0, dist_to_goal_2=484.33099999999996, blocking_obst_2=0.0, high_force_2=36.5981, dist_to_goal_3=484.33099999999996, blocking_obst_3=0.0, high_force_3=36.5981,), expected_output=Output(dist_to_goal=392.606, blocking_obst=0.0, high_force=0.0)),
-        Test(input=Input(num_objs=20, dist_to_goal_1=445.86400000000003, blocking_obst_1=450.07099999999997, high_force_1=356.69300000000004, dist_to_goal_2=307.08, blocking_obst_2=0.0, high_force_2=901.4689999999999, dist_to_goal_3=284.228, blocking_obst_3=0.0, high_force_3=593.047,), expected_output=Output(dist_to_goal=402.86300000000006, blocking_obst=0.0, high_force=0.0)),
-        Test(input=Input(num_objs=20, dist_to_goal_1=0.0469787, blocking_obst_1=0.0, high_force_1=324.075, dist_to_goal_2=0.0513354, blocking_obst_2=0.0, high_force_2=242.12599999999998, dist_to_goal_3=0.0513354, blocking_obst_3=0.0, high_force_3=242.12599999999998,), expected_output=Output(dist_to_goal=0.0446504, blocking_obst=0.0, high_force=209.80900000000003)),
-        Test(input=Input(num_objs=20, dist_to_goal_1=299.482, blocking_obst_1=0.0, high_force_1=242.179, dist_to_goal_2=299.482, blocking_obst_2=0.0, high_force_2=242.179, dist_to_goal_3=329.329, blocking_obst_3=0.0, high_force_3=388.635,), expected_output=Output(dist_to_goal=327.45599999999996, blocking_obst=0.0, high_force=0.0)),
-        Test(input=Input(num_objs=20, dist_to_goal_1=666.1030000000001, blocking_obst_1=0.0, high_force_1=281.647, dist_to_goal_2=482.94, blocking_obst_2=450.066, high_force_2=0.0, dist_to_goal_3=489.722, blocking_obst_3=0.0, high_force_3=0.0,), expected_output=Output(dist_to_goal=489.722, blocking_obst=0.0, high_force=0.0)),
-        Test(input=Input(num_objs=20, dist_to_goal_1=286.318, blocking_obst_1=0.0, high_force_1=636.484, dist_to_goal_2=286.318, blocking_obst_2=0.0, high_force_2=636.484, dist_to_goal_3=553.68, blocking_obst_3=450.05199999999996, high_force_3=17.4227,), expected_output=Output(dist_to_goal=280.49, blocking_obst=0.0, high_force=0.0)),
-    ]
-    from sklearn.metrics import mean_squared_error
-
-    for test in tests:
-        input_x = np.array([[
-            test.input.num_objs,
-
-            test.input.dist_to_goal_1,
-            test.input.blocking_obst_1,
-            test.input.high_force_1,
-
-            test.input.dist_to_goal_2,
-            test.input.blocking_obst_2,
-            test.input.high_force_2,
-
-            test.input.dist_to_goal_3,
-            test.input.blocking_obst_3,
-            test.input.high_force_3,
-        ]])
-
-        #xs = np.append(TRAINING_DATA, input_x, axis=0)
-        #normalised_xs = tf.keras.utils.normalize(xs, axis=1)
-        #input_x = np.array([normalised_xs[-1]])
-
-        y_pred = MODEL.predict(input_x)[0]
-        y_actual = test.expected_output.dist_to_goal + test.expected_output.blocking_obst + test.expected_output.high_force
-        #rms = mean_squared_error(y_actual, y_pred, squared=False)
-        print(y_pred, y_actual)
-
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description=textwrap.dedent('''\
-        TODO: Description
-        ''')
-    )
+    parser = argparse.ArgumentParser()
 
     parser.add_argument(
         "--human",
         dest="human_prediction",
-        action="store_true",
-        help=textwrap.dedent('''\
-        Will do human contribution prediction.
-        ''')
-    )
+        action="store_true")
 
     args = parser.parse_args()
 
@@ -425,4 +354,3 @@ if __name__ == "__main__":
         predictor = get_autonomous_predictor()
 
     predictor.train_and_evaluate_model()
-    #testing()
