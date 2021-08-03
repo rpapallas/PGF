@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<mujoco model="scene_20">
+	<compiler angle="radian" />
+	<include file="include/settings.xml" />
+	<asset>
+		<include file="include/assets.xml" />
+		<include file="robot/include/robot_assets.xml" />
+	</asset>
+	<include file="include/defaults.xml" />
+	<include file="include/custom_attributes_for_shelf_2.xml" />
+	<worldbody>
+		<include file="include/camera_and_lighting.xml" />
+		<body name="object_1" pos="0.287500 0.194553 0.182605" quat="-0.586582 -0.000004 0.000004 0.809890">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_1" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_1_free" type="free" />
+		</body>
+		<body name="object_2" pos="0.539546 0.235487 0.182605" quat="-0.138875 -0.000009 -0.000006 -0.990310">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_2" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_2_free" type="free" />
+		</body>
+		<body name="object_3" pos="0.468193 0.106131 0.182604" quat="0.362264 -0.000002 0.000001 0.932076">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_3" rgba="0 1 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_3_free" type="free" />
+		</body>
+		<body name="object_4" pos="0.403935 0.094468 0.182604" quat="-0.942266 0.000001 -0.000002 -0.334866">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_4" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_4_free" type="free" />
+		</body>
+		<body name="object_5" pos="0.301436 -0.086021 0.182603" quat="0.661665 0.000004 0.000009 -0.749799">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_5" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_5_free" type="free" />
+		</body>
+		<body name="object_6" pos="0.406957 0.313799 0.182602" quat="-0.782955 -0.000006 -0.000006 -0.622079">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_6" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_6_free" type="free" />
+		</body>
+		<body name="object_7" pos="0.550707 0.342474 0.182600" quat="0.773463 -0.000002 0.000010 0.633842">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_7" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_7_free" type="free" />
+		</body>
+		<body name="object_8" pos="0.478636 0.309331 0.182598" quat="0.243822 -0.000005 0.000009 0.969820">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_8" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_8_free" type="free" />
+		</body>
+		<body name="object_9" pos="0.371895 -0.058815 0.182596" quat="-0.999790 -0.000000 0.000001 0.020495">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_9" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_9_free" type="free" />
+		</body>
+		<body name="object_10" pos="0.381826 -0.189920 0.182593" quat="0.999986 -0.000009 0.000005 -0.005212">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_10" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_10_free" type="free" />
+		</body>
+		<body name="object_11" pos="0.516299 -0.023579 0.182591" quat="0.588303 -0.000001 -0.000000 -0.808640">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_11" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_11_free" type="free" />
+		</body>
+		<body name="object_12" pos="0.451428 -0.014158 0.182587" quat="-0.113343 0.000007 0.000005 0.993556">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_12" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_12_free" type="free" />
+		</body>
+		<body name="object_13" pos="0.294251 0.057842 0.182583" quat="0.261997 -0.000005 -0.000005 0.965069">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_13" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_13_free" type="free" />
+		</body>
+		<body name="object_14" pos="0.485527 -0.337893 0.182579" quat="-0.517589 -0.000000 -0.000000 -0.855629">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_14" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_14_free" type="free" />
+		</body>
+		<body name="object_15" pos="0.416352 0.242949 0.182575" quat="0.619270 0.000007 0.000007 0.785178">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_15" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_15_free" type="free" />
+		</body>
+		<body name="object_16" pos="0.290496 -0.288946 0.182570" quat="0.235349 -0.000011 -0.000013 0.971911">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_16" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_16_free" type="free" />
+		</body>
+		<body name="object_17" pos="0.541583 -0.135009 0.182564" quat="0.728249 -0.000000 0.000005 0.685313">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_17" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_17_free" type="free" />
+		</body>
+		<body name="object_18" pos="0.505141 -0.195000 0.182559" quat="0.270393 -0.000011 0.000004 -0.962750">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_18" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_18_free" type="free" />
+		</body>
+		<body name="object_19" pos="0.396400 -0.260557 0.182554" quat="-0.409689 -0.000004 0.000002 -0.912225">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_19" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_19_free" type="free" />
+		</body>
+		<body name="object_20" pos="0.297129 0.276718 0.182549" quat="-0.953640 0.000001 0.000002 0.300950">
+			<geom friction="0.3 0.3 0.3" contype="3" conaffinity="3" mass="1." name="object_20" rgba="1 0 0. 1" size="0.03 0.05" type="cylinder" />
+			<joint damping="0.5" stiffness="0.01" armature="0.1" name="object_20_free" type="free" />
+		</body>
+		<include file="robot/include/gripper_only_planar_robot.xml" />
+		<include file="include/small_shelf.xml" />
+	</worldbody>
+</mujoco>

@@ -1,0 +1,5 @@
+<launch>
+    <node name="predictor_human" pkg="pgf" type="prediction-server.py" args="--human" respawn="false" />
+    <node name="predictor_autonomous" pkg="pgf" type="prediction-server.py" respawn="false" />
+    <node name="human_allocator" pkg="pgf" type="human-allocator.py" respawn="false" />
+</launch>

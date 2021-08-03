@@ -1,0 +1,4 @@
+string name
+float32 predicted_gain
+---
+bool access_to_human_granted

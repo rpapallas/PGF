@@ -1,0 +1,32 @@
+<!--
+Copyright (C) 2018 The University of Leeds and Rafael Papallas
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+Author: Rafael Papallas (www.rpapallas.com)
+-->
+<mujocoinclude>
+    <body name="table" pos="0.4 0. -0.092" quat="1 0 0 0">
+        <geom type="box" name="table_object" contype="4" conaffinity="3" mass="100" friction="0.5 0.5 0.5" size="0.2 0.41 0.225" rgba="0.90 0.67 0.36 1." />
+    </body>
+
+    <body name="shelf" pos="0.4 0.0 -0.092">
+        <geom type="box" name="right_side_wall_invisible" contype="4" conaffinity="3" pos="-0.01 -0.5 0.333" mass="100" friction="0.5 0.5 0.5" size="0.2 0.1 0.2" rgba="0.76 0.6 0.42 0." />
+        <geom type="box" name="right_side_wall" contype="4" conaffinity="3" pos="-0.005 -0.405 0.38" friction="0.5 0.5 0.5" size="0.195 0.005 0.155" rgba="0.90 0.67 0.36 1." />
+        <geom type="box" name="left_side_wall_invisible" contype="4" conaffinity="3" pos="-0.01 0.5 0.333" mass="100" friction="0.5 0.5 0.5" size="0.2 0.1 0.2" rgba="0.76 0.6 0.42 0." />
+        <geom type="box" name="left_side_wall" contype="4" conaffinity="3" pos="-0.00 0.405 0.38" mass="100" friction="0.5 0.5 0.5" size="0.2 0.005 0.155" rgba="0.90 0.67 0.36 1." />
+        <geom type="box" name="back_side_wall_invisible" contype="4" conaffinity="3" pos="0.29 0. 0.333" mass="100" friction="0.5 0.5 0.5" size="0.1 0.4 0.2" rgba="0.76 0.6 0.42 0." />
+        <geom type="box" name="back_side_wall" contype="4" conaffinity="3" pos="0.195 0. 0.38" mass="100" friction="0.5 0.5 0.5" size="0.005 0.41 0.155" rgba="0.90 0.67 0.36 1." />
+    </body>
+</mujocoinclude>

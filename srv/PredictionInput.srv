@@ -1,0 +1,7 @@
+uint8 numberOfMovableObjects
+uint8 numberOfCollisions
+float32[] distanceToGoal
+float32[] highForce
+float32[] blockingObstacleInHand
+---
+float32 predictedCost
