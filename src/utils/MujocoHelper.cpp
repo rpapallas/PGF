@@ -29,7 +29,6 @@
 #include <utility>
 #include "../src/State.cpp"
 #include <boost/array.hpp>
-//#include "kinematics/kinematics.cpp"
 
 #ifndef MUJOCOHELPER
 #define MUJOCOHELPER
@@ -178,10 +177,6 @@ public:
         _hasGripperDOF = true;
     }
 
-    void disableGripperDOF() {
-        _hasGripperDOF = false;
-    }
-
     bool isGripperEnabled() const {
         return _hasGripperDOF;
     }
@@ -212,15 +207,6 @@ public:
                 _data->qvel[jointIndexForVel] = 0.0;
             }
         }
-
-//        for (unsigned int i = 0; i < _ur5JointNames.size(); ++i) {
-//            auto jointAddress = getJointQposAddr(_ur5JointNames[i]);
-//            int jointIndex = std::get<0>(jointAddress);
-//            _data->qpos[jointIndex] = _ur5JointValues[i];
-//            std::tuple<int, int> jointVelAddr = getJointQvelAddr(_ur5JointNames[i]);
-//            int jointIndexForVel = std::get<0>(jointVelAddr);
-//            _data->qvel[jointIndexForVel] = 0.0;
-//        }
 
         mj_forward(_model, _data);
     }
@@ -437,7 +423,6 @@ public:
 
         setGripperDOFValue(state.getGripperDOFValue());
         forward();
-//        step();
     }
 
     void resetSimulation() {
@@ -454,12 +439,6 @@ public:
 
         forward();
         _isSystemValid = true;
-    }
-
-    void zeroOutVelocities() {
-        for (int i = 0; i < _model->nv; ++i) {
-            _data->qvel[i] = 0.0;
-        }
     }
 
     double getTimeStep() {
@@ -509,8 +488,6 @@ public:
         int bodyId = mj_name2id(_model, mjOBJ_BODY, name.c_str());
         const int jointIndex = _model->body_jntadr[bodyId];
         const int start = _model->jnt_dofadr[jointIndex];
-        //auto indices = getJointQvelAddr(name);
-        //int start = get<0>(indices);
 
         std::lock_guard<std::mutex> lockGuard(mtx);
         _data->qvel[start + 0] = linearX;
@@ -525,8 +502,6 @@ public:
         int bodyId = mj_name2id(_model, mjOBJ_BODY, name.c_str());
         const int jointIndex = _model->body_jntadr[bodyId];
         const int start = _model->jnt_dofadr[jointIndex];
-        //auto indices = getJointQvelAddr(name);
-        //int start = get<0>(indices);
 
         std::lock_guard<std::mutex> lockGuard(mtx);
         double linearX = _data->qvel[start + 0];
@@ -622,9 +597,6 @@ public:
     // ===================================================================
 
     double getRollFromQuat(double w, double x, double y, double z) {
-        //double sinr_cosp = +2.0 * (w * x + y * z);
-        //double cosr_cosp = +1.0 - 2.0 * (x * x + y * y);
-        //double roll = atan2(sinr_cosp, cosr_cosp);
         mj_normalizeQuat(_model, _data->qpos);
 
         double aSinInput = -2 * (x * z - w * y);
@@ -646,14 +618,6 @@ public:
             aSinInput = -1;
 
         return asin(aSinInput);
-        //double sinp = +2.0 * (w * y - z * x);
-        //double pitch;
-        //if (fabs(sinp) >= 1)
-        //pitch = copysign(M_PI / 2, sinp); // use 90 degrees if out of range
-        //else
-        //pitch = asin(sinp);
-
-        //return pitch;
     }
 
     double getYawFromQuat(double w, double x, double y, double z) {
@@ -666,11 +630,6 @@ public:
             aSinInput = -1;
 
         return atan2(2 * (x * y + w * z), w * w + x * x - y * y - z * z);
-        //double siny_cosp = +2.0 * (w * z + x * y);
-        //double cosy_cosp = +1.0 - 2.0 * (y * y + z * z);
-        //double yaw = atan2(siny_cosp, cosy_cosp);
-
-        //return yaw;
     }
 
     static boost::array<double, 4> getQuatFromAxisAngle(mjtNum *axis, double value) {
@@ -1084,45 +1043,6 @@ public:
         return forceTorques;
     }
 
-    std::tuple<double, double, double> getBodyTorque(const std::string &name) {
-        int bodyId = mj_name2id(_model, mjOBJ_BODY, name.c_str());
-
-        std::lock_guard<std::mutex> lockGuard(mtx);
-        //mjtNum* bodyForceTorque;
-        //mj_contactForce(_model, _data, bodyId, bodyForceTorque);
-        //double t1 = bodyForceTorque[3];
-        //double t2 = bodyForceTorque[4];
-        //double t3 = bodyForceTorque[5];
-        //return std::make_tuple(t1, t2, t3);
-
-        //std::lock_guard<std::mutex> lockGuard(mtx);
-        double t1 = _data->xfrc_applied[(6 * bodyId) + 3];
-        double t2 = _data->xfrc_applied[(6 * bodyId) + 4];
-        double t3 = _data->xfrc_applied[(6 * bodyId) + 5];
-        return std::make_tuple(t1, t2, t3);
-    }
-
-    void setJoint(const string &name, double desiredValue) {
-        auto jointAddress = getJointQposAddr(name);
-        int jointIndex = std::get<0>(jointAddress);
-        for (unsigned int i = 0; i < _ur5JointNames.size(); ++i) {
-            if (_ur5JointNames[i] == name) {
-                _ur5JointValues[i] = desiredValue;
-                std::lock_guard<std::mutex> lockGuard(mtx);
-                _data->qpos[jointIndex] = desiredValue;
-                break;
-            }
-        }
-    }
-
-    void setUR5JointsToZero() {
-        for (unsigned int i = 0; i < _ur5JointNames.size(); ++i) {
-            auto jointAddress = getJointQposAddr(_ur5JointNames[i]);
-            int jointIndex = std::get<0>(jointAddress);
-            _ur5JointValues[i] = 0.0;
-            _data->qpos[jointIndex] = 0.0;
-        }
-    }
 
     vector<double> getUR5JointValues() const {
         return _ur5JointValues;
@@ -1139,14 +1059,6 @@ public:
     // ===================================================================
     //                                 Robot
     // ===================================================================
-
-    void updateRobotInitialXPosition(double initialX) {
-        _robotInitialXPosition = initialX;
-    }
-
-    void updateRobotInitialYPosition(double initialY) {
-        _robotInitialYPosition = initialY;
-    }
 
     double getRobotXpos() {
         int bodyId = mj_name2id(_model, mjOBJ_BODY, _robotName.c_str());
@@ -1213,22 +1125,6 @@ public:
 
         const double PHI = 0.09; // Angles are larger numbers (distances in meters)
         double angle = PHI * acos(dotProduct(unitDirectionVector, unitEeToGoalVector));
-
-
-//        double x1, x2, y1, y2;
-//        x1 = unitDirectionVector[0];
-//        y1 = unitDirectionVector[1];
-//
-//        x2 = unitEeToGoalVector[0];
-//        y2 = unitEeToGoalVector[1];
-//
-//        double angle = PHI * (atan2(y2, x2) - atan2(y1, x1));
-
-
-//        double angle = atan2(unitEeToGoalVector[1], unitEeToGoalVector[0]) - atan2(unitDirectionVector[1], unitDirectionVector[0]);
-//        if (angle > M_PI)        { angle -= 2 * M_PI; }
-//        else if (angle <= -M_PI) { angle += 2 * M_PI; }
-//        angle *= PHI;
 
         return sqrt(eeToGoalX * eeToGoalX + eeToGoalY * eeToGoalY + angle * angle);
     }
@@ -1447,7 +1343,6 @@ public:
             setBodyAccelerations(movableObjectName, q[9], q[10], q[11], q[12], q[13], q[14]);
         }
 
-        //_mujocoHelper->setAllWarmstart(0.0);
         step();
 
         bool isSystemValid = true;
@@ -1464,10 +1359,6 @@ public:
                 break;
             }
         }
-
-        //for(int i=0; i < duration / getTimeStep(); ++i) {
-        //step();
-        //}
 
         // Robot resulted state after propagation.
         ob::CompoundStateSpace::StateType *res = result->as<ob::CompoundStateSpace::StateType>();
@@ -1551,24 +1442,6 @@ public:
         step();
     }
 
-//    vector<IkReal> matrixToVector(Eigen::MatrixXf matrix) {
-//        vector<IkReal> pose;
-//        pose.push_back(matrix(0, 0));
-//        pose.push_back(matrix(0, 1));
-//        pose.push_back(matrix(0, 2));
-//        pose.push_back(matrix(0, 3));
-//        pose.push_back(matrix(1, 0));
-//        pose.push_back(matrix(1, 1));
-//        pose.push_back(matrix(1, 2));
-//        pose.push_back(matrix(1, 3));
-//        pose.push_back(matrix(2, 0));
-//        pose.push_back(matrix(2, 1));
-//        pose.push_back(matrix(2, 2));
-//        pose.push_back(matrix(2, 3));
-//
-//        return pose;
-//    }
-
     vector<vector<double>> ik(Eigen::MatrixXf desiredEndEffectorTransform) {
         printf("Please ensure that end_effector_helper body is in the world!\n");
         double x = desiredEndEffectorTransform(0, 3);
@@ -1587,24 +1460,12 @@ public:
         Eigen::MatrixXf baseLinkTransform = getSiteTransform("base_site");
         Eigen::MatrixXf localTransform = baseLinkTransform.inverse() * desiredEndEffectorTransform;
 
-//        auto pose = matrixToVector(localTransform);
-//        vector<float> result = _ikFast.inverse(pose);
         vector<double> result1;
 
         setBodyXYPosition("end_effector_helper", originalX, originalY);
         forward();
 
         vector<vector<double>> solutions;
-//        for (unsigned int i = 0; i < result.size(); i += 6) {
-//            vector<double> solution;
-//
-//            for (int j = 0; j < 6; ++j) {
-//                solution.push_back(result[i + j]);
-//            }
-//
-//            solutions.push_back(solution);
-//        }
-
         return solutions;
     }
 
@@ -1792,22 +1653,6 @@ public:
         return getBodyNumberOfCollisions(_robotName);
     }
 
-    int getNumberOfCollisionsForRobotsDesiredState(double x, double y, double yaw) {
-        int originalResetLevel = _resetLevel;
-
-        setRobotXYPosition(x, y);
-        setRobotYaw(yaw);
-        step();
-
-        int numberOfCollisions = getRobotNumberOfCollisions();
-
-        setResetLevel(originalResetLevel);
-
-        // Reset the system to the previous state
-        resetSimulation();
-
-        return numberOfCollisions;
-    }
 
 
     // ===================================================================
@@ -1907,14 +1752,12 @@ private:
     vector<int> _bodyIdsToIgnoreCollisions;
 
     vector<double> _ur5JointValues = {-1.494190, -2.847766, -1.497504, -1.952727, -1.546158, -3.14159};
-//    vector<double> _ur5JointValues = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     vector<string> _ur5JointNames = {"shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist_1_joint",
                                      "wrist_2_joint", "wrist_3_joint"};
 
     vector<string> _movableObjectNames;
     State _latestState;
     State _initialState;
-//    Kinematics _ikFast;
 };
 
 #endif
