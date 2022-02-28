@@ -14,8 +14,6 @@ from tensorflow.keras.layers.experimental import preprocessing
 from collections import namedtuple
 import getpass
 
-PLOT = True
-
 DATA_PATH = os.path.expanduser("~/data")
 
 class Predictor:
@@ -122,17 +120,6 @@ class AutonomousPredictor(Predictor):
         es_callback = keras.callbacks.EarlyStopping(monitor='val_loss', patience=4, restore_best_weights=True)
         history = model.fit(x_train, y_train, validation_split=0.2, epochs=100, batch_size=50, shuffle=True, callbacks=[es_callback])
 
-        if PLOT:
-            plt.figure(1)
-            plt.plot(history.history['loss'], label='training')
-            plt.plot(history.history['val_loss'], label='testing')
-            plt.title('Model Error')
-            plt.ylabel('RMSE')
-            plt.xlabel('# epochs')
-            plt.legend(loc="upper left")
-
-            plt.show()
-
         return model
 
     def _get_data(self, data):
@@ -217,17 +204,6 @@ class HumanPredictor(Predictor):
         model.compile(optimizer=tf.optimizers.Adam(), loss=self._root_mean_squared_error)
         es_callback = keras.callbacks.EarlyStopping(monitor='val_loss', patience=4, restore_best_weights=True)
         history = model.fit(x_train, y_train, validation_split=0.3, epochs=100, batch_size=50, shuffle=True, callbacks=[es_callback])
-
-        if PLOT:
-            plt.figure(1)
-            plt.plot(history.history['loss'], label='training')
-            plt.plot(history.history['val_loss'], label='testing')
-            plt.title('Model Error')
-            plt.ylabel('RMSE')
-            plt.xlabel('# epochs')
-            plt.legend(loc="upper left")
-
-            plt.show()
 
         return model
 

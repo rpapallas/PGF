@@ -13,8 +13,7 @@ SERVICE_NAME = None
 TRAINING_DATA = None
 
 def do_prediction(req):
-    input_x = np.array([[#req.numberOfCollisions, 
-                  req.numberOfMovableObjects, 
+    input_x = np.array([[req.numberOfMovableObjects, 
 
                   req.distanceToGoal[0], 
                   req.blockingObstacleInHand[0], 

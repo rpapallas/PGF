@@ -68,15 +68,6 @@ void render() {
 
 // keyboard callback
 void verbose() {
-    // Eigen::MatrixXf endEffectorTransform = globalMujocoHelper->getSiteTransform("object_6");
-    // Eigen::MatrixXf baseLinkTransform = globalMujocoHelper->getSiteTransform("base_site");
-    // Eigen::MatrixXf localTransform = baseLinkTransform.inverse() * endEffectorTransform;
-
-    // cout << endEffectorTransform << endl;
-    // cout << baseLinkTransform << endl;
-    // cout << localTransform << endl;
-    // return;
-
     printf("Ridgeback Position | x: %f, y: %f, yaw: %f\n", globalMujocoHelper->getRobotXpos(),
            globalMujocoHelper->getRobotYpos(), globalMujocoHelper->getRobotYaw());
 
@@ -424,10 +415,6 @@ void loadModel(const std::string &scenePath) {
     // re-create scene and context
     mjv_makeScene(model, &scn, 2000);
     mjr_makeContext(model, &con, mjFONTSCALE_150);
-
-    //model->actuator_gainprm[0] = 5e3;
-    //model->actuator_gainprm[1] = 5e3;
-    //model->actuator_gainprm[2] = 5e3;
 
     cam.lookat[0] = 1.48821;
     cam.lookat[1] = 0.00114961;

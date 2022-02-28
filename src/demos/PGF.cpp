@@ -62,7 +62,6 @@ int NUMBER_OF_CONSECUTIVE_NON_DECREASES = 5;
 bool PREDICTIVE = true; // TensorFlow-based prediction
 float THRESHOLD_PREDICTION = 1;
 
-//double TIMEOUT_FOR_HELP = 30.0;
 double TIMEOUT_FOR_HELP = 180.0;
 double TOTAL_TIME_LIMIT = 180.0;
 
